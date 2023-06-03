@@ -9,7 +9,12 @@ import io.devops.cicd.DeployConfig
 import io.devops.cicd.ServiceApp
 
 
-def call() {
+def call(Closure body) {
+
+    // def config = [:]
+    // body.resolveStrategy = Closure.DELEGATE_FIRST
+    // body.delegate = config
+    // body()
 
     def project = Config.project.join('\n')
     def projectEnv = Config.projectEnv.join('\n')
