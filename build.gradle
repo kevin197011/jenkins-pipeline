@@ -1,0 +1,59 @@
+plugins {
+    id 'groovy'
+    id "com.mkobit.jenkins.pipelines.shared-library" version "0.10.1"
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDir 'src'
+            srcDir 'vars'
+        }
+        resources {
+            srcDir 'resources'
+        }
+    }
+    test {
+        groovy {
+            srcDir 'test'
+        }
+    }
+}
+
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.jenkins-ci.org/releases/' }
+}
+
+
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
+configurations {
+    ivy
+}
+
+tasks.withType(GroovyCompile) {
+    groovyClasspath += configurations.ivy
+}
+
+
+dependencies {
+    implementation 'com.cloudbees:groovy-cps:1.29'
+    def ivyDep = 'org.apache.ivy:ivy:2.4.0'
+    ivy ivyDep
+    implementation ivyDep
+
+    testImplementation 'com.lesfurets:jenkins-pipeline-unit:1.1'
+    testImplementation 'junit:junit:4.12'
+    // spock
+    testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
+    testImplementation 'org.objenesis:objenesis:3.0.1'
+    testImplementation 'cglib:cglib-nodep:3.2.12'
+
+    implementation group: 'org.jenkins-ci.main', name: 'jenkins-core', version: '2.286'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.12'
+    implementation 'junit:junit:4.12'
+    testImplementation group: 'com.lesfurets', name: 'jenkins-pipeline-unit', version: '1.3'
+}
