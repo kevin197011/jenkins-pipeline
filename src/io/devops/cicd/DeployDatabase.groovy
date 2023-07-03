@@ -37,11 +37,11 @@ class DeployDatabase {
         try {
             instance.execute(sqlData)
             instance.commit()
-            script.echo "project[${this.project}] env[${this.projectEnv}] sql update sucessed!"
+            script.echo("project[${this.project}] env[${this.projectEnv}] sql update sucessed!")
             val = true
         } catch (Exception ex) {
             instance.rollback()
-            script.echo ex.toString()
+            script.echo(ex.toString())
 //            ex.printStackTrace()
         }
         instance.close()
